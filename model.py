@@ -1,12 +1,12 @@
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import *
-from tensorflow.keras.callbacks import ModelCheckpoint
-from tensorflow.keras.losses import MeanSquaredError
-from tensorflow.keras.metrics import RootMeanSquaredError
-from tensorflow.keras.optimizers import Adam
+from keras.models import Sequential
+from keras.layers import *
+from keras.callbacks import ModelCheckpoint
+from keras.losses import MeanSquaredError
+from keras.metrics import RootMeanSquaredError
+from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 
 

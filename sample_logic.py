@@ -1,26 +1,37 @@
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-from tensorflow.keras.models import load_model
+#### Only delT is predicted still freshwater and power generation need to be calculated ###
+#### That has to be done based on the NIOT plant situated in different co-ordinate given value ####
 
-saved_model = load_model("./model")
+
+import pandas as pd
+from datetime import datetime, timedelta
+from keras.models import load_model
 
 data_frame = pd.read_csv("./data/julyKavaratti.csv")
 final_date = data_frame.iloc[-1]['Timestamp']
-date_to_predict = '03-08-2023 4:30 PM'
+
+# Get in this Format from the User
+date_to_predict = '22-7-2020 10:30 AM'
+date_to_predict_string = date_to_predict
 
 final_date = datetime.strptime(final_date, '%d-%m-%Y %I:%M %p')
 date_to_predict = datetime.strptime(date_to_predict, '%d-%m-%Y %I:%M %p')
 latest_date = final_date
 
-date_differ = (final_date-date_to_predict).days
+date_differ = (date_to_predict-final_date).days
 
+if date_differ < 0:
+    print("Data is Already There")
+    delT = (data_frame.loc[data_frame['Timestamp']
+                           == date_to_predict_string]['DelT'].values)[0]
+    print("The Predicted DelT for " + str(date_to_predict) + " is : " +
+          str(delT))
 
-if abs(date_differ) > 7:
+elif abs(date_differ) > 7:
     print("Enter Date within a week")
 
 else:
     # Do the Prediction
+    saved_model = load_model("./model")
     hour_differ = (final_date-date_to_predict).total_seconds() / (60*60)
     no_of_time_prediction_to_happen = abs(hour_differ) / 6
     # for i in range(0, no_of_time_prediction_to_happen):
