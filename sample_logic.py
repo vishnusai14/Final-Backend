@@ -4,7 +4,7 @@
 
 import pandas as pd
 from datetime import datetime, timedelta
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 
 
 def get_prediction_result(date, csvname):

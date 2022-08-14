@@ -33,18 +33,18 @@ input_vector_validation, output_vector_validation = input_vector[
     2000:2558], output_vector[2000:2558]
 input_vector_test, output_vector_test = input_vector[2559:], output_vector[2559:]
 print(input_vector_train)
-# model = Sequential()
-# model.add(InputLayer((5, 1)))
-# model.add(LSTM(64))
-# model.add(Dense(8, 'relu'))
-# model.add(Dense(1, 'linear'))
+model = Sequential()
+model.add(InputLayer((5, 1)))
+model.add(LSTM(64))
+model.add(Dense(8, 'relu'))
+model.add(Dense(1, 'linear'))
 
-# # print(model.summary())
+# print(model.summary())
 
-# save_model_callback = ModelCheckpoint("./model", save_best_only=True)
+save_model_callback = ModelCheckpoint("./model", save_best_only=True)
 
-# # Compile The Model
-# model.compile(loss=MeanSquaredError(), optimizer=Adam(
-#     learning_rate=0.001), metrics=[RootMeanSquaredError()])
-# model.fit(input_vector_train, output_vector_train, validation_data=(
-#     input_vector_validation, output_vector_validation), epochs=50, callbacks=[save_model_callback])
+# Compile The Model
+model.compile(loss=MeanSquaredError(), optimizer=Adam(
+    learning_rate=0.001), metrics=[RootMeanSquaredError()])
+model.fit(input_vector_train, output_vector_train, validation_data=(
+    input_vector_validation, output_vector_validation), epochs=50, callbacks=[save_model_callback])
