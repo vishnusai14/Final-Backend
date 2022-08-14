@@ -1,0 +1,19 @@
+<form method="post" action="{{ url_for('predict')}}">
+
+    <label for="place">Choose a Place:</label>
+
+    <select name="place" id="place">
+        <option value="tuticorin">Tuticorin</option>
+        <option value="andaman">Andaman</option>
+        <option value="lakshadweep">Lakshadweep</option>
+    </select>
+
+    <br />
+    <label for="date">Choose The Date:</label>
+    <input name="date" id="date" type="date" />
+    <br />
+
+    <button type="submit">Submit</button>
+
+
+</form>
