@@ -33,9 +33,11 @@ def get_prediction_result(date, csvname):
                                == date_to_predict_string]['DelT'].values)[0]
         print("The Predicted DelT for " + str(date_to_predict) + " is : " +
               str(delT))
+        return delT
 
     elif abs(date_differ) > 7:
         print("Enter Date within a week")
+        return 'Enter Date within a week'
 
     else:
         # Do the Prediction
