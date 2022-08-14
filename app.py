@@ -19,8 +19,8 @@ def main():
 def predict():
     if request.method == 'POST':
         print("It is Post method")
-        date = request.form.get('date')
-        place = request.form.get('place')
+        date = request.json.get('date')
+        place = request.json.get('place')
         place = place.lower()
         format_date = datetime.strptime(
             date, "%Y-%m-%d").strftime('%m/%d/%Y')
