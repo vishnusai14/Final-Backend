@@ -1,4 +1,3 @@
-keras
 tensorflow
 pandas
 Flask
