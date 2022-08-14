@@ -1,3 +1,4 @@
 tensorflow-cpu
 pandas
 Flask
+gunicorn
