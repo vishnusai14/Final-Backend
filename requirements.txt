@@ -1,4 +1,7 @@
 tensorflow-cpu
-pandas
-Flask
+pandas~=1.4.3
+Flask~=2.2.2
 gunicorn
+numpy~=1.23.2
+keras~=2.9.0
+nco~=1.0.0

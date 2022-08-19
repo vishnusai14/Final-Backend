@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from datetime import datetime
 from sample_logic import *
+from createCsv import *
 
 app = Flask(__name__)
 
@@ -15,14 +16,28 @@ def main():
     return render_template('sample.html')
 
 
+@app.route("/api/v1/test", methods=['POST'])
+def test():
+    if request.method == 'POST':
+        coordinate = request.json.get('coordinate')
+        print(coordinate)
+
+
 @app.route("/api/v1/predict", methods=['POST'])
 def predict():
     if request.method == 'POST':
         print(request.json)
         print("It is Post method")
         date = request.json.get('date')
-        place = request.json.get('place')
-        place = place.lower()
+        cor = request.json.get('cor')
+        print(cor)
+        rounded_lat = round(cor['latitude'], 2)
+        rounded_long = round(cor['longitude'], 2)
+
+        createCsv(rounded_lat, rounded_long)
+        place = str(rounded_lat) + "-" + str(rounded_long)
+
+        print(place)
 
         delT = get_prediction_result(date, place)
         power_freshwater_dict = {"18": ['56', '1.24'], "19": [
