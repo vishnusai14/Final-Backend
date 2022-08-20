@@ -1,3 +1,5 @@
+import math
+from re import L
 from flask import Flask, jsonify, request, render_template
 from datetime import datetime
 from sample_logic import *
@@ -34,32 +36,67 @@ def predict():
         rounded_lat = round(cor['latitude'], 2)
         rounded_long = round(cor['longitude'], 2)
 
-        createCsv(rounded_lat, rounded_long)
-        place = str(rounded_lat) + "-" + str(rounded_long)
+        rounded_lat_difff = rounded_lat - math.floor(rounded_lat)
+        rounded_lat_difff = round(rounded_lat_difff, 2)
 
-        print(place)
+        rounded_long_difff = rounded_long - math.floor(rounded_long)
+        rounded_long_difff = round(rounded_long_difff, 2)
 
-        delT = get_prediction_result(date, place)
-        power_freshwater_dict = {"18": ['56', '1.24'], "19": [
-            '63', '1.3'], "20": ['70', '1.36'], "21": ['77', '1.43']}
+        print("This is the rounded_diff", rounded_lat_difff, rounded_long_difff)
 
-        if (delT == 'Enter Date within a week'):
-            return 'Enter Date within a week'
+        final_lat = 0
+        final_long = 0
+        if rounded_lat_difff < 0.25:
+            final_lat = math.floor(rounded_lat)
+        elif rounded_lat >= 0.25 and rounded_lat < 0.5:
+            final_lat = math.floor(rounded_lat) + 0.25
+        elif rounded_lat >= 0.5 and rounded_lat < 0.75:
+            final_lat = math.floor(rounded_lat) + 0.25
+        elif rounded_lat >= 0.75 and rounded_lat < 1:
+            final_lat = math.floor(rounded_lat) + 0.75
         else:
-            delTtoString = ""
-            if (delT < 18.5):
-                delTtoString = str(18)
-            elif (delT > 18.5 and delT <= 19.5):
-                delTtoString = str(19)
-            elif (delT > 19.5 and delT <= 20.5):
-                delTtoString = str(20)
-            elif (delT > 20.5):
-                delTtoString = str(21)
+            final_lat = math.floor(rounded_lat) + 1
 
-            power_fresh_water = power_freshwater_dict[delTtoString]
-            print(power_fresh_water)
+        if rounded_long_difff < 0.25:
+            final_long = math.floor(rounded_long)
+        elif rounded_long >= 0.25 and rounded_long < 0.5:
+            final_long = math.floor(rounded_long) + 0.25
+        elif rounded_long >= 0.5 and rounded_long < 0.75:
+            final_long = math.floor(rounded_long) + 0.25
+        elif rounded_long >= 0.75 and rounded_long < 1:
+            final_long = math.floor(rounded_long) + 0.75
 
-            return power_fresh_water
+        else:
+            final_long = math.floor(rounded_long) + 1
+        correct_place = createCsv(final_lat, final_long)
+        if correct_place:
+            place = str(final_lat) + "-" + str(final_long)
+
+            print("This is the place : ",  place)
+
+            delT = get_prediction_result(date, place)
+            power_freshwater_dict = {"18": ['56', '1.24'], "19": [
+                '63', '1.3'], "20": ['70', '1.36'], "21": ['77', '1.43']}
+
+            if (delT == 'Enter Date within a week'):
+                return 'Enter Date within a week'
+            else:
+                delTtoString = ""
+                if (delT < 18.5):
+                    delTtoString = str(18)
+                elif (delT > 18.5 and delT <= 19.5):
+                    delTtoString = str(19)
+                elif (delT > 19.5 and delT <= 20.5):
+                    delTtoString = str(20)
+                elif (delT > 20.5):
+                    delTtoString = str(21)
+
+                power_fresh_water = power_freshwater_dict[delTtoString]
+                print(power_fresh_water)
+
+                return power_fresh_water
+        else:
+            return "Please Select Correct Region"
 
 
 if __name__ == "__main__":

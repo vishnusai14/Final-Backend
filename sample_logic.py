@@ -14,7 +14,6 @@ def get_prediction_result(date, csvname):
 
     # Get in this Format from the User
     date_to_predict = date
-    date_to_predict_string = date_to_predict
 
     # final_date = datetime.strptime(final_date, '%m/%d/%Y')
     # date_to_predict = datetime.strptime(date_to_predict, '%m/%d/%Y')
@@ -29,7 +28,7 @@ def get_prediction_result(date, csvname):
         print("This has to be there", data_frame.loc[data_frame['DATE']
                                                      == date_to_predict]['DelT'].values)
         delT = (data_frame.loc[data_frame['DATE']
-                               == date_to_predict_string]['DelT'].values)[0]
+                               == date_to_predict]['DelT'].values)[0]
         print("The Predicted DelT for " + str(date_to_predict) + " is : " +
               str(delT))
         return delT
@@ -56,8 +55,8 @@ def get_prediction_result(date, csvname):
             latest_date = datetime.strftime(latest_date, '%m/%d/%Y')
             print(latest_date)
 
-            df = pd.DataFrame({'DATE': [latest_date], 'SST(K)': ['NaN'], 'SST(degC)': ['NaN'],  'CW(degC)': [
-                '282'], 'DelT': [train_data_prediction.tolist()[0]]})
+            df = pd.DataFrame({'DATE': [latest_date], 'DelT': [
+                              train_data_prediction.tolist()[0]]})
 
             df.to_csv('./data/'+csvname+'.csv',
                       mode='a', index=False, header=False)
